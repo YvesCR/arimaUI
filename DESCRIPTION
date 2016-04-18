@@ -1,0 +1,12 @@
+Package: arimaUI
+Type: Package
+Title: shiny gadget to pick arima parameter
+Version: 0.1.0
+Authors@R: person("Yves", "Crutain", email = "yves.crutain@gmail.com",
+  role = c("aut", "cre"))
+Maintainer: yves crutain <yves.crutain@gmail.com>
+Description: Only one function so far, arimaUI
+License: CC0
+Depends: R (>= 3.1.0)
+Imports: shiny, miniUI
+LazyData: TRUE
