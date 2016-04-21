@@ -247,3 +247,14 @@ arimaUI <- function(ts.ar) {
 
   runGadget(ui, server, viewer = dialogViewer("myGadgetFunc"))
 }
+
+#' @import rstudioapi
+arima_addin = function(){
+
+  print('here')
+
+  selected_text = getActiveDocumentContext()$selection[[1]]$text
+  ts.ar <- eval(parse(text = selected_text))
+  arimaUI(ts.ar)
+
+}

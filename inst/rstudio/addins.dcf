@@ -1,0 +1,9 @@
+Name: arima_addin
+Description: Launches arima gadget
+Binding: arima_addin
+Interactive: true
+
+Name: sergiusz
+Description: run head function on variable
+Binding: sergiusz
+Interactive: false
