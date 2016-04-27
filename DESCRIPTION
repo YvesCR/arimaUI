@@ -9,6 +9,7 @@ Description: Only one function so far, arimaUI
 License: CC0
 Depends:
     miniUI,
-    shiny
+    shiny,
+    rstudioapi
 LazyData: TRUE
 RoxygenNote: 5.0.1
