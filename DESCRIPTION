@@ -7,9 +7,9 @@ Authors@R: person("Yves", "Crutain", email = "yves.crutain@gmail.com",
 Maintainer: yves crutain <yves.crutain@gmail.com>
 Description: Only one function so far, arimaUI
 License: CC0
-Depends:
+Imports:
     miniUI,
     shiny,
     rstudioapi
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.0

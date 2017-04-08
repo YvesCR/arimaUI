@@ -38,4 +38,3 @@ library(forecast)
 auto.arima(sim.ts)
 
 }
-
