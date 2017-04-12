@@ -32,102 +32,102 @@
 arimaUI <- function(ts.ar) {
 
   # ui part
-  ui <- miniPage(
-    gadgetTitleBar("Arima parameter picker"),
-    miniTabstripPanel(
+  ui <- miniUI::miniPage(
+    miniUI::gadgetTitleBar("Arima parameter picker"),
+    miniUI::miniTabstripPanel(
       # Raw plot tab: Line chart of the time serie
-      miniTabPanel( "Raw plot", icon = icon("area-chart"),
-                    miniContentPanel(
-                      plotOutput("plot.ts")
-                    )
+      miniUI::miniTabPanel( "Raw plot", icon = shiny::icon("area-chart"),
+                            miniUI::miniContentPanel(
+                              shiny::plotOutput("plot.ts")
+                            )
       )
-      , miniTabPanel("Identification", icon = icon("key"),
-                     miniTabstripPanel(
-                       miniTabPanel("ACF",
-                                    miniContentPanel(
-                                      # source of the code: analysis with programming http://alstatr.blogspot.co.uk
-                                      a("ACF: correlation between values of the process at different times",
-                                        href="https://en.wikipedia.org/wiki/Autocorrelation",
-                                        target = "_blank"),
-                                      plotOutput("plot.acf", height = "100%")
-                                    )
-                       ),
-                       miniTabPanel("PACF",
-                                    miniContentPanel(
-                                      a("PACF: Given a time series z(t), the partial autocorrelation of lag k, is the autocorrelation between z(t) and z(t+k) with the linear dependence of z(t) on z(t+1) through z(t+k-1) removed",
-                                        href="https://en.wikipedia.org/wiki/Partial_autocorrelation_function",
-                                        target = "_blank"),
-                                      plotOutput("plot.pacf", height = "90%")
-                                    )
-                       )
-                     )
+      , miniUI::miniTabPanel("Identification", icon = shiny::icon("key"),
+                             miniUI::miniTabstripPanel(
+                               miniUI::miniTabPanel("ACF",
+                                                    miniUI::miniContentPanel(
+                                                      # source of the code: analysis with programming http://alstatr.blogspot.co.uk
+                                                      shiny::a("ACF: correlation between values of the process at different times",
+                                                        href="https://en.wikipedia.org/wiki/Autocorrelation",
+                                                        target = "_blank"),
+                                                      shiny::plotOutput("plot.acf", height = "100%")
+                                                    )
+                               ),
+                               miniUI::miniTabPanel("PACF",
+                                                    miniUI::miniContentPanel(
+                                                      shiny::a("PACF: Given a time series z(t), the partial autocorrelation of lag k, is the autocorrelation between z(t) and z(t+k) with the linear dependence of z(t) on z(t+1) through z(t+k-1) removed",
+                                                        href="https://en.wikipedia.org/wiki/Partial_autocorrelation_function",
+                                                        target = "_blank"),
+                                                      shiny::plotOutput("plot.pacf", height = "90%")
+                                                    )
+                               )
+                             )
       )
-      , miniTabPanel("Parameter picker", icon = icon("gears"),
-                     miniContentPanel(
-                       sliderInput(
-                         inputId = "ar",
-                         label = "Autoregressive",
-                         min = 0,
-                         max = 2,
-                         value = 1)
-                       ,sliderInput(
-                         inputId = "df",
-                         label = "Differencing",
-                         value = 0,
-                         min = 0,
-                         max = 2)
-                       , sliderInput(
-                         inputId = "ma",
-                         label = "Moving-Average",
-                         min = 0,
-                         max = 2,
-                         value = 1)
-                       , htmlOutput("fit.text2")
-                     )
+      , miniUI::miniTabPanel("Parameter picker", icon = shiny::icon("gears"),
+                             miniUI::miniContentPanel(
+                               shiny::sliderInput(
+                                 inputId = "ar",
+                                 label = "Autoregressive",
+                                 min = 0,
+                                 max = 2,
+                                 value = 1)
+                               ,shiny::sliderInput(
+                                 inputId = "df",
+                                 label = "Differencing",
+                                 value = 0,
+                                 min = 0,
+                                 max = 2)
+                               , shiny::sliderInput(
+                                 inputId = "ma",
+                                 label = "Moving-Average",
+                                 min = 0,
+                                 max = 2,
+                                 value = 1)
+                               , shiny::htmlOutput("fit.text2")
+                             )
       )
-      , miniTabPanel("Fit", icon = icon("line-chart"),
-                     miniContentPanel(padding = 5,
-                                      htmlOutput("fit.text")
-                                      , plotOutput("fit.res", height = "65%")
-                     )
+      , miniUI::miniTabPanel("Fit", icon = shiny::icon("line-chart"),
+                             miniUI::miniContentPanel(padding = 5,
+                                                      shiny::htmlOutput("fit.text")
+                                                      , shiny::plotOutput("fit.res", height = "65%")
+                             )
       )
-      , miniTabPanel("Diagnostic", icon = icon("user-md"),
-                     miniTabstripPanel(
-                       miniTabPanel("Residus",
-                                    miniContentPanel(
-                                      plotOutput("fit.residus")
-                                    )
-                       )
-                       , miniTabPanel("Residus Lag plot",
-                                      miniContentPanel(
-                                        plotOutput("fit.lag", height = "80%"),
-                                        sliderInput(inputId = "lag", label = "Lag", min = 1, max = 12, value = 1)
-                                      )
-                       )
-                       , miniTabPanel("Ljung-Box test",
-                                      miniContentPanel(
-                                        helpText(strong("HYPOTHESES:"),"from ",
-                                                 a("Wikipedia",
-                                                   href="http://en.wikipedia.org/wiki/Ljung%E2%80%93Box_test"),
-                                                 br(),
-                                                 strong("H0:"),
-                                                 "The data are independently distributed (i.e. the correlations in
-                                                 the population from which the sample is taken are 0, so that any
-                                                 observed correlations in the data result from randomness of the
-                                                 sampling process.",br()
-                                                 , strong("H1:"),
-                                                 "The data are not independently distributed.",br(),br(),br(),
-                                                 strong("COMPUTATION:"),br(),
-                                                 "The computed statistics is:",
-                                                 textOutput("diagx2"),
-                                                 "The computed p-value is:",
-                                                 textOutput("diagpv"),br(),br(),
-                                                 strong("DECISION:"),textOutput("diagdc"),br(),br(),
-                                                 strong("CONCLUSION:"),textOutput("diagcn")
-                                        )
-                                      )
-                       )
-                     )
+      , miniUI::miniTabPanel("Diagnostic", icon = shiny::icon("user-md"),
+                             miniUI::miniTabstripPanel(
+                               miniUI::miniTabPanel("Residus",
+                                                    miniUI::miniContentPanel(
+                                                      shiny::plotOutput("fit.residus")
+                                                    )
+                               )
+                               , miniUI::miniTabPanel("Residus Lag plot",
+                                                      miniUI::miniContentPanel(
+                                                        shiny::plotOutput("fit.lag", height = "80%"),
+                                                        shiny::sliderInput(inputId = "lag", label = "Lag", min = 1, max = 12, value = 1)
+                                                      )
+                               )
+                               , miniUI::miniTabPanel("Ljung-Box test",
+                                                      miniUI::miniContentPanel(
+                                                        shiny::helpText(shiny::strong("HYPOTHESES:"),"from ",
+                                                                        shiny::a("Wikipedia",
+                                                                                 href="http://en.wikipedia.org/wiki/Ljung%E2%80%93Box_test"),
+                                                                        shiny::br(),
+                                                                        shiny::strong("H0:"),
+                                                                        "The data are independently distributed (i.e. the correlations in
+                                       the population from which the sample is taken are 0, so that any
+                                       observed correlations in the data result from randomness of the
+                                       sampling process.", shiny::br()
+                                                                        , shiny::strong("H1:"),
+                                                                        "The data are not independently distributed.",shiny::br(),shiny::br(),shiny::br(),
+                                                                        shiny::strong("COMPUTATION:"),shiny::br(),
+                                                                        "The computed statistics is:",
+                                                                        shiny:: textOutput("diagx2"),
+                                                                        "The computed p-value is:",
+                                                                        shiny:: textOutput("diagpv"),shiny::br(),shiny::br(),
+                                                                        shiny::strong("DECISION:"),shiny:: textOutput("diagdc"),shiny::br(),shiny::br(),
+                                                                        shiny::strong("CONCLUSION:"),shiny:: textOutput("diagcn")
+                                                        )
+                                                      )
+                               )
+                             )
       )
     )
   )
@@ -135,24 +135,24 @@ arimaUI <- function(ts.ar) {
   server <- function(input, output, session) {
 
     # Render the time serie line chart
-    output$plot.ts <- renderPlot({
+    output$plot.ts <- shiny::renderPlot({
       plot(ts.ar, main = "My time serie", ylab = "Frequency")
     })
 
     # Render the ACF graph
-    output$plot.acf <- renderPlot({
+    output$plot.acf <- shiny::renderPlot({
       acf.res <- acf(ts.ar, plot = F)
       plot(acf.res, main = "")
     })
 
     # Render the PACF graph
-    output$plot.pacf <- renderPlot({
+    output$plot.pacf <- shiny::renderPlot({
       pacf.res <- pacf(ts.ar, plot = F)
       plot(pacf.res, main = "")
     })
 
     # Estimation of the function
-    estimate <- reactive({
+    estimate <- shiny::reactive({
       ar <- input$ar ; df <- input$df ; ma <- input$ma
       k <- arima(
         ts.ar,
@@ -160,19 +160,19 @@ arimaUI <- function(ts.ar) {
     })
 
     # Render the output of the arima function
-    output$fit.text <- renderUI({
+    output$fit.text <- shiny::renderUI({
       k <- estimate()
       HTML(gsub(" ", "&nbsp;", paste(capture.output(k)[-c(1, 4)], collapse = "<br/>")))
     })
 
     # Render the output of the arima function (2)
-    output$fit.text2 <- renderUI({
+    output$fit.text2 <- shiny::renderUI({
       k <- estimate()
       HTML(gsub(" ", "&nbsp;", paste(capture.output(k)[-1], collapse = "<br/>")))
     })
 
     # Render the residus plot
-    output$fit.residus <- renderPlot({
+    output$fit.residus <- shiny::renderPlot({
       k <- estimate()
       plot(k$residuals, type = "h", ylab = "Residus", xlab = "Time"
            , main = "Residus over time")
@@ -180,7 +180,7 @@ arimaUI <- function(ts.ar) {
     })
 
     # render the residus lag plot
-    output$fit.lag <- renderPlot({
+    output$fit.lag <- shiny::renderPlot({
       lag <- input$lag
 
       length.ts <- length(estimate()$residuals)
@@ -191,26 +191,26 @@ arimaUI <- function(ts.ar) {
     })
 
     # Render the time series graph + the fitted values
-    output$fit.res <- renderPlot({
+    output$fit.res <- shiny::renderPlot({
       fit.pred.res <- estimate()$residuals + as.numeric(ts.ar)
       plot(ts.ar, col = "blue")
       lines(fit.pred.res, col = "red")
     })
 
     # Render the test
-    output$diagx2 <- renderPrint({
+    output$diagx2 <- shiny::renderPrint({
       m <- Box.test(estimate()$residuals, type = "Ljung-Box")
       as.numeric(as.matrix(m$statistic))
     })
 
     # Render the test
-    output$diagpv <- renderPrint({
+    output$diagpv <- shiny::renderPrint({
       m <- Box.test(estimate()$residuals, type = "Ljung-Box")
       as.numeric(as.matrix(m$p.value))
     })
 
     # Render the test
-    output$diagdc <- renderPrint({
+    output$diagdc <- shiny::renderPrint({
       m <- Box.test(estimate()$residuals, type = "Ljung-Box")
       j <- as.numeric(as.matrix(m$p.value))
       if(j >= 0.05){
@@ -222,7 +222,7 @@ arimaUI <- function(ts.ar) {
     })
 
     # Render the test
-    output$diagcn <- renderPrint({
+    output$diagcn <- shiny::renderPrint({
       ar <- input$ar ; df <- input$df ; ma <- input$ma
       fit <- arima(
         ts.ar, order = c(ar, df, ma),
@@ -238,23 +238,21 @@ arimaUI <- function(ts.ar) {
     })
 
     # Handle the Done button being pressed
-    observeEvent(input$done, {
+    shiny::observeEvent(input$done, {
       k <- estimate()
-      stopApp(returnValue = list(ar = input$ar, df = input$df, ma = input$ma
-                                 , coefs = data.frame(k$coef)))
+      shiny::stopApp(returnValue = list(ar = input$ar, df = input$df, ma = input$ma
+                                        , coefs = data.frame(k$coef)))
     })
   }
 
-  runGadget(ui, server, viewer = dialogViewer("myGadgetFunc"))
+  shiny::runGadget(ui, server, viewer = shiny::dialogViewer("myGadgetFunc"))
 }
 
 #' @import rstudioapi
 arima_addin = function(){
 
-  print('here')
-
-  selected_text = getActiveDocumentContext()$selection[[1]]$text
+  selected_text = rstudioapi::getActiveDocumentContext()$selection[[1]]$text
   ts.ar <- eval(parse(text = selected_text))
-  arimaUI(ts.ar)
+  arimaUI::arimaUI(ts.ar)
 
 }
