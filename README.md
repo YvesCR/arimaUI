@@ -6,5 +6,4 @@ Blog post: [http://data-laborer.eu/2016/04/ARIMA_Picker.html](http://data-labore
 
 To install:
 
-    library(devtools)
-    install_github("YvesCR/arimaUI")
+    devtools::install_github("YvesCR/arimaUI")
